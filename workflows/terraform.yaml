@@ -18,18 +18,15 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Validar e Inicializar
-        workdir: "part-9"
         run: |
           terraform fmt -check
           terraform init
           terraform validate
 
       - name: Executar plan
-        workdir: "part-9"
         if: github.event_name == 'pull_request'
         run: terraform plan
 
       - name: Executar apply
-        workdir: "part-9"
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
